@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <title>Document</title>
+</head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.min.js"></script>
+
+<body>
+  <script src="js/input.js" type="text/javascript"></script>
+
+  <div class="jumbotron bg-secondary text-center">
+    <h1>28槓</h1>
+  </div>
+  <div>
+
+    <p>計算筆數
+      <input type="text" name="dataAmount" value=1000>
+    </p>
+    <p>每幾局輸出資料
+
+      <input id="round-check" type="radio" name="round" value="1"> 1</label>
+      <input id="round-check" type="radio" name="round" value="2"> 2</label>
+      <input id="round-check" type="radio" name="round" value="5"> 5</label>
+      <input id="round-check" type="radio" name="round" value="10"> 10</label>
+      <input id="round-check" type="radio" name="round" value="20"> 20</label>
+    </p>
+
+  </div>
+
+  <button type=" button " class=" btn btn-primary " id="button"> 開始計算 </button>
+  <p id="loading"></p>
+  <table class="table table-hover table-bordered table-dark text-center">
+    <thead>
+      <tr>
+        <th scope="col" rowspan="2">注區</th>
+        <th scope="col" rowspan="2">和算莊贏</th>
+        <th scope="col" rowspan="2">莊贏</th>
+        <th scope="col" rowspan="2">閒贏</th>
+        <th scope="col" rowspan="2">和贏</th>
+        <th scope="col" rowspan="2">莊對</th>
+        <th scope="col" rowspan="2">閒對</th>
+        <th scope="col" rowspan="2">莊28槓</th>
+        <th scope="col" rowspan="2">閒28槓</th>
+        <th scope="col" rowspan="2">莊鱉十</th>
+        <th scope="col" rowspan="2">閒鱉十</th>
+        <th scope="col" colspan="4">白板注區</th>
+      <tr>
+        <td>白板1</td>
+        <td>白板2</td>
+        <td>白板3</td>
+        <td>白板4</td>
+      </tr>
+      </th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">賠率</th>
+        <td>
+          <input type="text" class="form-control input-lg" id="Banker_and_Tie_Win" value=1.93>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="Banker_Win" value=2>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="Player_Win" value=2>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="Tie_Win" value=0>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="Banker_Pair" value=10>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="Player_Pair" value=10>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="Banker_28gang" value=42>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="Player_28gang" value=42>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="Banker_10point" value=13>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="Player_10point" value=13>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="White_1" value=2>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="White_2" value=5>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="White_3" value=44>
+        </td>
+        <td>
+          <input type="text" class="form-control input-lg" id="White_4" value=100>
+        </td>
+      </tr>
+      <tr id="thmRate">
+        <!-- <th scope="row" colspan="1">理論機率</th> -->
+      </tr>
+      <tr id="thmRTP">
+        <td>理論RTP</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td colspan="4"></td>
+
+      </tr>
+      <tr>
+        <td colspan="15" class="table table-hover table-bordered table-light text-center"></td>
+      </tr>
+      <tr>
+        <td colspan="15" class="table table-hover table-bordered table-success text-center">數據</td>
+      </tr>
+      <thead>
+        <tr>
+          <th scope="col" rowspan="2">注區</th>
+          <th scope="col" rowspan="2">和算莊贏</th>
+          <th scope="col" rowspan="2">莊贏</th>
+          <th scope="col" rowspan="2">閒贏</th>
+          <th scope="col" rowspan="2">和贏</th>
+          <th scope="col" rowspan="2">莊對</th>
+          <th scope="col" rowspan="2">閒對</th>
+          <th scope="col" rowspan="2">莊28槓</th>
+          <th scope="col" rowspan="2">閒28槓</th>
+          <th scope="col" rowspan="2">莊鱉十</th>
+          <th scope="col" rowspan="2">閒鱉十</th>
+          <th scope="col" colspan="4">白板注區</th>
+        <tr>
+          <td>白板1</td>
+          <td>白板2</td>
+          <td>白板3</td>
+          <td>白板4</td>
+        </tr>
+        </th>
+
+
+        </tr>
+      </thead>
+    <tbody id="RoundResult">
+      <tr>
+        <td>第Ｎ局</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td colspan="4"></td>
+      </tr>
+    </tbody>
+    </tbody>
+
+  </table>
+</body>
+
+</html>
